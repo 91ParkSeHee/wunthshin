@@ -41,9 +41,11 @@ public:
 	// 데이터 테이블 row 타입에 따라 핸들을 가져온 후 ApplyAsset을 호출
 	// 변수값이 있는 공통 상속 클래스가 없기 때문에 ThisT template 유지
 	template <typename ThisT> requires (std::is_base_of_v<UObject, ThisT>)
-	void FetchAsset(ThisT* InThisPointer, const FName& InRowName)
+	void FetchAsset(ThisT* InThisPointer, const FName& InRowName, const UWorld* InWorld = nullptr)
 	{
-		const UWorld*                           World     = InThisPointer->GetWorld();
+		const UWorld* World = InThisPointer->GetWorld();
+		if (InWorld) World = InWorld;
+		
 		ensureAlwaysMsgf(World, TEXT("Invalid World!"));
 
 #ifdef WITH_EDITOR

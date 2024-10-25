@@ -5,6 +5,7 @@
 #include "ItemTableRow.generated.h"
 
 class USG_WSItemMetadata;
+class UItemAction;
 
 USTRUCT()
 struct WUNTHSHIN_API FItemTableRow : public FTableRowBase
@@ -30,6 +31,12 @@ struct WUNTHSHIN_API FItemTableRow : public FTableRowBase
 
 	UPROPERTY(EditAnywhere)
 	FTransform MeshOffset;
+
+	UPROPERTY(EditAnywhere)
+	TArray<UObject*> TestAction123;
+
+	UPROPERTY(EditAnywhere)
+	TArray<AActor*> TestActorFields;
 
 	UPROPERTY()
 	USG_WSItemMetadata* GlobalItemMetadataPointer;

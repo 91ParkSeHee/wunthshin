@@ -47,6 +47,8 @@ class WUNTHSHIN_API UC_WSInventory : public UActorComponent
 
 	FInventoryPair* FindItem(const USG_WSItemMetadata* InMetadata);
 
+	
+	
 public:	
 	// Sets default values for this component's properties
 	UC_WSInventory();

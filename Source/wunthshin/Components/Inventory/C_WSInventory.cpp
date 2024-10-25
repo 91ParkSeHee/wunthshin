@@ -2,8 +2,11 @@
 
 
 #include "C_WSInventory.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "wunthshin/Actors/Item/A_WSItem.h"
+#include "wunthshin/Actors/Item/ItemAction.h"
+#include "wunthshin/Data/ItemMetadata/SG_WSItemMetadata.h"
 
 DEFINE_LOG_CATEGORY(LogInventory);
 
@@ -12,7 +15,7 @@ UC_WSInventory::UC_WSInventory()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
 
@@ -36,6 +39,10 @@ void UC_WSInventory::TickComponent(float DeltaTime, ELevelTick TickType, FActorC
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
+
+	// TestCode
+	if (UGameplayStatics::GetPlayerController(this, 0)->WasInputKeyJustPressed(EKeys::Q))
+		UseItem(nullptr);
 }
 
 FInventoryPair* UC_WSInventory::FindItem(const USG_WSItemMetadata* InMetadata)
@@ -122,5 +129,21 @@ void UC_WSInventory::RemoveItem(AA_WSItem* InItem, int InCount)
 void UC_WSInventory::UseItem(AA_WSItem* InItem, int Count)
 {
 	UE_LOG(LogInventory, Log, TEXT("UC_WSInventory::UseItem"));
+	
+	// Test
+	AA_WSItem* TestItem = NewObject<AA_WSItem>();
+	TestItem->FetchAsset(TestItem, TEXT("Potion"));
+	AddItem(TestItem);
+
+	uint32 SelectedIndex = 0; // test
+	auto AssetName = Items[SelectedIndex].Metadata->GetAssetName();
+	auto Data = GetWorld()->GetGameInstance()->GetSubsystem<UItemSubsystem>()->FindItem(AssetName).GetRow<FItemTableRow>(TEXT("ItemData"));
+	
+	TArray<AActor*> tempTargets;
+
+	/*for (auto Action : Data->TestAction123)
+	{
+		Action->ExecuteAction(GetOwner(), tempTargets);
+	}*/
 }
 
