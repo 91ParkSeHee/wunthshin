@@ -57,15 +57,15 @@ struct FItemActionRow : public FTableRowBase
 };
 
 UCLASS()
-class WUNTHSHIN_API UItemAction : public UObject, public IDataTableFetcher
+class WUNTHSHIN_API UItemAction : public UObject//, public IDataTableFetcher
 {
 	GENERATED_BODY()
 	
 
-	// IDataTableFetcher을(를) 통해 상속됨
-	UScriptStruct* GetTableType() const override;
+	//// IDataTableFetcher을(를) 통해 상속됨
+	//UScriptStruct* GetTableType() const override;
 
-	void ApplyAsset(const FDataTableRowHandle& InRowHandle) override;
+	//void ApplyAsset(const FDataTableRowHandle& InRowHandle) override;
 
 public:
 	void ExecuteAction(AActor* InOwner, TArray<AActor*> InTargets);

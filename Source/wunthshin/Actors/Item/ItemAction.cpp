@@ -6,20 +6,20 @@
 
 DEFINE_LOG_CATEGORY(LogItemAction);
 
-UScriptStruct* UItemAction::GetTableType() const
-{
-	return FItemActionRow::StaticStruct();
-}
-
-void UItemAction::ApplyAsset(const FDataTableRowHandle& InRowHandle)
-{
-	if (InRowHandle.IsNull()) return;
-
-	auto Data = InRowHandle.GetRow<FItemActionRow>(TEXT("Action"));
-
-	
-
-}
+//UScriptStruct* UItemAction::GetTableType() const
+//{
+//	return FItemActionRow::StaticStruct();
+//}
+//
+//void UItemAction::ApplyAsset(const FDataTableRowHandle& InRowHandle)
+//{
+//	if (InRowHandle.IsNull()) return;
+//
+//	auto Data = InRowHandle.GetRow<FItemActionRow>(TEXT("Action"));
+//
+//	
+//
+//}
 
 void UItemAction::ExecuteAction(AActor* InOwner, TArray<AActor*> InTargets)
 {

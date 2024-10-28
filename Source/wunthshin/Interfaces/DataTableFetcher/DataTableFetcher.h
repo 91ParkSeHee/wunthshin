@@ -23,7 +23,7 @@ struct FCharacterTableRow;
 DECLARE_LOG_CATEGORY_CLASS(LogTableFetcher, Log, All);
 
 // This class does not need to be modified.
-UINTERFACE()
+UINTERFACE(BlueprintType)
 class UDataTableFetcher : public UInterface
 {
 	GENERATED_BODY()

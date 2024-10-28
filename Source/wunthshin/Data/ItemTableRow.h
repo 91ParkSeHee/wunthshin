@@ -33,7 +33,7 @@ struct WUNTHSHIN_API FItemTableRow : public FTableRowBase
 	FTransform MeshOffset;
 
 	UPROPERTY(EditAnywhere)
-	TArray<UObject*> TestAction123;
+	TArray<TSubclassOf<UItemAction>> TestAction123;
 
 	UPROPERTY(EditAnywhere)
 	TArray<AActor*> TestActorFields;
