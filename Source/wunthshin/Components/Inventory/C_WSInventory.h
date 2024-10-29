@@ -8,6 +8,7 @@
 
 class USG_WSItemMetadata;
 class AA_WSItem;
+class AA_WSCharacter;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogInventory, Log, All);
 
@@ -47,14 +48,17 @@ class WUNTHSHIN_API UC_WSInventory : public UActorComponent
 
 	FInventoryPair* FindItem(const USG_WSItemMetadata* InMetadata);
 
-	
-	
+	UPROPERTY()
+	AA_WSCharacter* InventoryOwner;
+
 public:	
 	// Sets default values for this component's properties
 	UC_WSInventory();
 
 	const TArray<FInventoryPair>& GetItems() const { return Items; }
-
+	
+	UFUNCTION()
+	void SetInventoryOwner(AA_WSCharacter* InOwner) { InventoryOwner = InOwner; }
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;

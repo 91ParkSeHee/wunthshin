@@ -4,8 +4,9 @@
 #include "C_WSInventory.h"
 #include "Kismet/GameplayStatics.h"
 
+#include "wunthshin/Actors/AA_WSCharacter.h"
 #include "wunthshin/Actors/Item/A_WSItem.h"
-#include "wunthshin/Actors/Item/ItemAction.h"
+#include "wunthshin/Actors/Item/ItemAction/ItemAction.h"
 #include "wunthshin/Data/ItemMetadata/SG_WSItemMetadata.h"
 
 DEFINE_LOG_CATEGORY(LogInventory);
@@ -132,18 +133,11 @@ void UC_WSInventory::UseItem(AA_WSItem* InItem, int Count)
 	
 	// Test
 	AA_WSItem* TestItem = NewObject<AA_WSItem>();
-	TestItem->FetchAsset(TestItem, TEXT("Potion"));
+	TestItem->FetchAsset(TestItem, TEXT("TestItem"), GetWorld());
 	AddItem(TestItem);
 
-	uint32 SelectedIndex = 0; // test
-	auto AssetName = Items[SelectedIndex].Metadata->GetAssetName();
-	auto Data = GetWorld()->GetGameInstance()->GetSubsystem<UItemSubsystem>()->FindItem(AssetName).GetRow<FItemTableRow>(TEXT("ItemData"));
+	TArray<AActor*> TestTargets;
 	
-	TArray<AActor*> tempTargets;
-
-	/*for (auto Action : Data->TestAction123)
-	{
-		Action->ExecuteAction(GetOwner(), tempTargets);
-	}*/
+	TestItem->UseItem(InventoryOwner, TestTargets);
 }
 

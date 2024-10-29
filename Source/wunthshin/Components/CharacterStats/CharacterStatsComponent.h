@@ -5,11 +5,16 @@
 #include "Logging/LogMacros.h"
 #include "CharacterStatsComponent.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnUpdateStats, FCharacterStats)
+
 // 캐릭터의 스탯을 정의하는 구조체
 USTRUCT(BlueprintType)
 struct FCharacterStats : public FTableRowBase
 {
     GENERATED_BODY()
+
+    UPROPERTY()
+    float CurrentHP = 0;
 
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Stats")
     float MaxHP;
@@ -55,7 +60,22 @@ public:
     void InitializeStats();
 
     // 스태미나 업데이트 함수
+    UFUNCTION()
     void UpdateStamina(float DeltaTime, bool bIsFastRunning);
 
+    UFUNCTION()
+    void UpdateStats(FCharacterStats ChangedStats);
+
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
+
+public:
+    FOnUpdateStats OnUpdateStats;
+};
+
+UCLASS()
+class UValue : public UObject
+{
+    GENERATED_BODY()
+
+    
 };

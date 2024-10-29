@@ -10,6 +10,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 
 #include "wunthshin/Components/PickUp/C_WSPickUp.h"
+#include "wunthshin/Actors/Item/ItemAction/ItemAction.h"
 #include "wunthshin/Data/ItemTableRow/ItemTableRow.h"
 #include "wunthshin/Data/ItemMetadata/SG_WSItemMetadata.h"
 #include "wunthshin/Subsystem/Utility.h"
@@ -149,12 +150,25 @@ void AA_WSItem::ApplyAsset(const FDataTableRowHandle& InRowHandle)
 
 	ItemMetadata = FItemSubsystemUtility::GetMetadata<UItemSubsystem, UItemEditorSubsystem, USG_WSItemMetadata>(GetWorld(), Data->ItemName);
 	
+	if (!Data->ItemActions.IsEmpty())
+	{
+
+	}
+
 	// todo: Icon, ItemName 등 정보 추가
 }
 
 const USG_WSItemMetadata* AA_WSItem::GetItemMetadata() const
 {
 	return ItemMetadata;
+}
+
+void AA_WSItem::UseItem(AActor* InInstigator, TArray<AActor*> InTargets)
+{
+	for (auto& Action : ItemActions)
+	{
+		//Action->ExecuteAction();
+	}
 }
 
 // Called when the game starts or when spawned

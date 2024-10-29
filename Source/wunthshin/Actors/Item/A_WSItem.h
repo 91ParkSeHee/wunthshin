@@ -11,6 +11,7 @@
 
 class UProjectileMovementComponent;
 struct FItemTableRow;
+class UItemAction;
 class UC_WSPickUp;
 class USG_WSItemMetadata;
 
@@ -41,6 +42,7 @@ public:
 	static const FName CollisionComponentName;
 	
 	// Sets default values for this actor's properties
+	AA_WSItem() = default;
 	AA_WSItem(const FObjectInitializer& ObjectInitializer);
 
 	// 
@@ -62,11 +64,18 @@ public:
 	
 	const USG_WSItemMetadata* GetItemMetadata() const;
 
+	// 아이템 사용
+	virtual void UseItem(AActor* InInstigator, TArray<AActor*> InTargets);
+
 protected:
 	// 아이템의 메타데이터 (테이블에서 생성한 정적변수, Destroy 하면 안됨!)
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Metadata")
 	const USG_WSItemMetadata* ItemMetadata;
 	
+	// 메타데이터(또는 AssetName)로 불러오는 아이템 효과들
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "ItemAction")
+	TArray<UItemAction*> ItemActions;
+
 	// 매시
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Mesh")
 	UStaticMeshComponent* MeshComponent;

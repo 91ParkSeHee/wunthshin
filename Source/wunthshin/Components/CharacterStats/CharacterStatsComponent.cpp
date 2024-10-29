@@ -34,6 +34,9 @@ void UCharacterStatsComponent::BeginPlay()
     Super::BeginPlay(); // 부모 클래스의 BeginPlay 호출
 
     InitializeStats(); // 스탯 초기화
+
+    OnUpdateStats.AddUFunction(this, FName("UpdateStats"));
+    OnUpdateStats.AddUFunction(this, FName("UpdateStamina"));
 }
 
 void UCharacterStatsComponent::InitializeStats()
@@ -46,6 +49,7 @@ void UCharacterStatsComponent::InitializeStats()
         if (Stats)
         {
             CurrentStats.MaxHP = Stats->MaxHP;
+            CurrentStats.CurrentHP = Stats->MaxHP;
             CurrentStats.Stamina = Stats->Stamina;
             UE_LOG(LogTemp, Warning, TEXT("MaxHP: %f, Stamina: %f"), CurrentStats.MaxHP, CurrentStats.Stamina);
         }
@@ -85,6 +89,11 @@ void UCharacterStatsComponent::UpdateStamina(float DeltaTime, bool bIsFastRunnin
         CurrentStats.Stamina += StaminaRecoveryRate * DeltaTime;
         CurrentStats.Stamina = FMath::Min(CurrentStats.Stamina, 100.0f); // 최대 스태미나로 제한
     }
+}
+
+void UCharacterStatsComponent::UpdateStats(FCharacterStats ChangedStats)
+{
+    
 }
 
 void UCharacterStatsComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)

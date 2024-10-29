@@ -1,11 +1,11 @@
 #pragma once
 
 #include "wunthshin/Enums.h"
+#include "wunthshin/Data/ItemActionTableRow/ItemActionTableRow.h"
 
 #include "ItemTableRow.generated.h"
 
 class USG_WSItemMetadata;
-class UItemAction;
 
 USTRUCT()
 struct WUNTHSHIN_API FItemTableRow : public FTableRowBase
@@ -33,10 +33,7 @@ struct WUNTHSHIN_API FItemTableRow : public FTableRowBase
 	FTransform MeshOffset;
 
 	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<UItemAction>> TestAction123;
-
-	UPROPERTY(EditAnywhere)
-	TArray<AActor*> TestActorFields;
+	TArray<FItemActionTableRow> ItemActions;
 
 	UPROPERTY()
 	bool bBox;
