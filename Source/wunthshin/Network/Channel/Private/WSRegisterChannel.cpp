@@ -1,5 +1,7 @@
 #include "wunthshin/Network/Channel/Public/WSRegisterChannel.h"
 
+#include "EntitySystem/MovieSceneEntitySystemRunner.h"
+
 void UWSRegisterChannel::ReceivedBunch(MessageBase& Bunch)
 {
 	switch ( Bunch.GetType() )
@@ -15,4 +17,13 @@ void UWSRegisterChannel::ReceivedBunch(MessageBase& Bunch)
 
 void UWSRegisterChannel::SendBunchInternal(const EMessageType MessageType, MessageBase& Bunch)
 {
+	switch ( MessageType )
+	{
+	case EMessageType::Register:
+		
+		break;
+	case EMessageType::RegisterStatus:
+		break;
+	}
+	
 }

@@ -14,6 +14,7 @@ enum class EMessageType : int32_t
     LogoutOK,
     Register,
     RegisterStatus,
+    CharacterStatus,
     MAX
 };
 
@@ -23,6 +24,7 @@ enum class EMessageChannelType : int32_t
     Comm,
     Login,
     Register,
+    PlayerState,
     MAX
 };
 
@@ -128,6 +130,7 @@ struct MessageT : MessageBase
 using Varchar = std::array<char, 256>;
 using HashArray = std::array<std::byte, 32>;
 using UUID = std::array<std::byte, 16>;
+using DataPair = std::pair<int32_t, int32_t>
 
 DEFINE_MSG( UnspecifiedMessage, EMessageType::Unspecified, EMessageChannelType::Unspecified )
 DEFINE_MSG( PingPongMessage, EMessageType::PingPong, EMessageChannelType::Comm )
@@ -180,6 +183,18 @@ RegisterStatusMessage(bool InSucess, ERegistrationFailCode InCode)
 }
 bool success = false; 
 ERegistrationFailCode code = ERegistrationFailCode::None;)
+
+DEFINE_MSG_WITH_BODY(
+    CharacterStatusMessage, EMessageType::CharacterStatChanged, EMessageChannelType::Character,
+
+CharacterStatusMessage(DataPair InDataPair)
+{
+    StatKey = InDataPair.first;
+    Increasement = InDataPair.second;
+}
+int32 StatKey = 0;      // 조정할 스탯의 키값
+int32 Increasement = 0; // 조정할 스탯의 수치
+)
 
 #pragma pack( pop )
 

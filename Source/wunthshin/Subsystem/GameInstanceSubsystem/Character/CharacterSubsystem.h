@@ -34,6 +34,9 @@ class WUNTHSHIN_API UCharacterSubsystem : public UGameInstanceSubsystem, public 
 	TArray<TObjectPtr<AA_WSCharacter>> OwnedCharacters;
 	
 	TArray<TArray<uint8>> CharacterSnapshots;
+
+	UPROPERTY()
+	int32 CurrentCharacterKey = 0;
 	
 public:
 	UCharacterSubsystem();
