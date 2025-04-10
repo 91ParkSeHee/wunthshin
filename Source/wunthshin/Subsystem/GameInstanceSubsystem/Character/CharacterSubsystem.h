@@ -89,6 +89,8 @@ public:
 
 		return nullptr;
 	}
+
+	UDataTable* GetStatDataTable() const { return StatDataTable; }
 	
 	void AddCharacter(AA_WSCharacter* InCharacter);
 	void AddCharacter(AA_WSCharacter* Character, int32 InIndex);

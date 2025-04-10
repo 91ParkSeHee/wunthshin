@@ -1,6 +1,7 @@
 #include "WSServerSubsystem.h"
 #include "wunthshin/Network/Channel/Public/WSLoginChannel.h"
 #include "wunthshin/Network/Channel/Public/WSRegisterChannel.h"
+#include "wunthshin/Network/Channel/Public/WSPlayerStateChannel.h"
 #include "wunthshin/Misc/Public/sha256.h"
 #include "message.h"
 

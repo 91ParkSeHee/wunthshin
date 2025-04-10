@@ -6,6 +6,7 @@
 
 class UWSLoginChannel;
 class UWSRegisterChannel;
+class UWSPlayerStateChannel;
 
 // https://unrealcommunity.wiki/config-files-read-and-write-to-config-files-zuoaht01
 UCLASS(Config = Engine)
@@ -57,4 +58,6 @@ private:
 	UWSLoginChannel* LoginChannel = nullptr;
 
 	UWSRegisterChannel* RegisterChannel = nullptr;
+
+	UWSPlayerStateChannel* PlayerStateChannel = nullptr;
 };

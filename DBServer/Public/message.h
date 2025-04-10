@@ -130,7 +130,7 @@ struct MessageT : MessageBase
 using Varchar = std::array<char, 256>;
 using HashArray = std::array<std::byte, 32>;
 using UUID = std::array<std::byte, 16>;
-using DataPair = std::pair<int32_t, int32_t>
+using DataPair = std::pair<Varchar, int32_t>;
 
 DEFINE_MSG( UnspecifiedMessage, EMessageType::Unspecified, EMessageChannelType::Unspecified )
 DEFINE_MSG( PingPongMessage, EMessageType::PingPong, EMessageChannelType::Comm )
@@ -185,14 +185,14 @@ bool success = false;
 ERegistrationFailCode code = ERegistrationFailCode::None;)
 
 DEFINE_MSG_WITH_BODY(
-    CharacterStatusMessage, EMessageType::CharacterStatChanged, EMessageChannelType::Character,
+    CharacterStatusMessage, EMessageType::CharacterStatus, EMessageChannelType::PlayerState,
 
 CharacterStatusMessage(DataPair InDataPair)
 {
-    StatKey = InDataPair.first;
+    StatName = std::move(InDataPair.first);
     Increasement = InDataPair.second;
 }
-int32 StatKey = 0;      // 조정할 스탯의 키값
+Varchar StatName = "";      // 조정할 스탯의 키값
 int32 Increasement = 0; // 조정할 스탯의 수치
 )
 
