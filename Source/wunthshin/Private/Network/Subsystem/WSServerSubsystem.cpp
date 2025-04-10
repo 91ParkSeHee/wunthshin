@@ -2,6 +2,7 @@
 #include "Network/Channel/WSLoginChannel.h"
 #include "Network/Channel/WSRegisterChannel.h"
 #include "Network/Channel/WSItemChannel.h"
+#include "Network/Channel/WSPlayerStateChannel.h"
 #include "Misc/sha256.h"
 #include "message.h"
 #include "Misc/Paths.h"

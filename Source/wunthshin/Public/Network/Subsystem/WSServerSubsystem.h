@@ -9,6 +9,7 @@ struct FUUIDWrapper;
 class UWSLoginChannel;
 class UWSRegisterChannel;
 class UWSItemChannel;
+class UWSPlayerStateChannel;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnServerSubsystemInitialized);
 extern FOnServerSubsystemInitialized GOnServerSubsystemInitialized;
@@ -82,4 +83,6 @@ private:
 	UWSRegisterChannel* RegisterChannel = nullptr;
 
 	UWSItemChannel* ItemChannel = nullptr;
+	
+	UWSPlayerStateChannel* PlayerStateChannel = nullptr;
 };

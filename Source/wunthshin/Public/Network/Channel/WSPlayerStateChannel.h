@@ -2,7 +2,7 @@
 #include "wunthshin/Network/Channel/WSChannelBase.h"
 #include "WSPlayerStateChannel.generated.h"
 
-
+class AwunthshinPlayerController;
 //------------------------------------------------------------------------------------
 // Message Define
 //
@@ -27,9 +27,21 @@ UCLASS()
 class WUNTHSHIN_API UWSPlayerStateChannel : public UWSChannelBase
 {
 	GENERATED_BODY()
+
+public:
+	UWSPlayerStateChannel();
+	
 public:
 	virtual void ReceivedBunch(MessageBase& Bunch) override;
 
 protected:
 	virtual void SendBunchInternal(const EMessageType MessageType, MessageBase& Bunch) override;
+
+public:
+	UPROPERTY()
+	FOnChangedCharacterStat OnChangedCharacterStat;
+
+private:
+	UPROPERTY()
+	AwunthshinPlayerController* CurrentPlayerController;
 };
