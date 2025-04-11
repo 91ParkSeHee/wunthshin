@@ -154,3 +154,9 @@ void UStatsComponent::CopyStats(const FCharacterStats& CharacterStats)
 {
     CurrentStats = CharacterStats;
 }
+
+void UStatsComponent::SetCurrentStats(const FString InStatName, const int32 InStatIncreasement)
+{
+    
+    
+}

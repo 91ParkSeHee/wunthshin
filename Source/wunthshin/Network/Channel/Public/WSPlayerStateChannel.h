@@ -44,4 +44,6 @@ public:
 private:
 	UPROPERTY()
 	AwunthshinPlayerController* CurrentPlayerController;
+
+	CharacterStatusMessage PreparedMessage;
 };

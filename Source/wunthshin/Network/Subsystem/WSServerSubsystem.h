@@ -38,6 +38,11 @@ public:
 
 	virtual void Initialize(FSubsystemCollectionBase& Collection) override;
 
+#pragma region [Character] Send
+public:
+	bool TryChangeCharacterStatus(const FString& InStatName, const int32 InStatIncreasement);
+#pragma endregion
+	
 protected:
 	void Tick(float DeltaTime) override;
 
