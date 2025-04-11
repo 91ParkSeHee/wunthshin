@@ -14,7 +14,7 @@ DEFINE_CHANNEL_MESSAGE(PlayerStateChannel, EMessageChannelType::PlayerState, Cha
 // Event Delegate
 //
 #pragma region [Event]
-DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnChangedCharacterStat, int32, StatKey, int32, StatIncreasement);
+//DECLARE_DYNAMIC_DELEGATE_TwoParams(FOnChangedCharacterStat, int32, StatKey, int32, StatIncreasement);
 #pragma endregion [Event]
 
 //------------------------------------------------------------------------------------
@@ -37,11 +37,13 @@ public:
 protected:
 	virtual void SendBunchInternal(const EMessageType MessageType, MessageBase& Bunch) override;
 
-public:
+//public:
 	UPROPERTY()
-	FOnChangedCharacterStat OnChangedCharacterStat;
+	//FOnChangedCharacterStat OnChangedCharacterStat;
 
 private:
 	UPROPERTY()
 	AwunthshinPlayerController* CurrentPlayerController;
+
+	CharacterStatusMessage PreparedMessage;
 };

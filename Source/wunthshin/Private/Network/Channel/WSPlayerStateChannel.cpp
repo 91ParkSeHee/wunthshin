@@ -17,9 +17,11 @@ void UWSPlayerStateChannel::ReceivedBunch(MessageBase& Bunch)
 	case EMessageType::CharacterStatus:
 		{
 			CharacterStatusMessage& CharMessage = reinterpret_cast<CharacterStatusMessage&>(Bunch);
-			//AA_WSCharacter* CurrentChar = GetWorld()->GetSubsystem<UCharacterSubsystem>()->GetCurrentCharacter();
-			//UStatsComponent* StatComp = CurrentChar->GetStatsComponent();
-
+			FString statName = CharMessage.StatName.data();
+			int32 statIncreasement = CharMessage.Increasement;
+			
+			UStatsComponent* statComp = CurrentPlayerController->GetComponentByClass<UStatsComponent>();
+			
 			
 			
 		}
@@ -37,9 +39,7 @@ void UWSPlayerStateChannel::SendBunchInternal(const EMessageType MessageType, Me
 	case EMessageType::CharacterStatus:
 		{
 			CharacterStatusMessage& CharMessage = reinterpret_cast<CharacterStatusMessage&>(Bunch);
-			FName StatName = CharMessage.StatName.data();
-			auto Test = FindFieldChecked<float>(FCharacterStats::StaticStruct(),TEXT("HP"));
-			CurrentPlayerController-
+			
 		}
 		break;
 		

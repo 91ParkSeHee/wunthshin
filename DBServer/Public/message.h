@@ -148,7 +148,6 @@ struct MessageT : MessageBase
 using Varchar = std::array<char, 256>;
 using HashArray = std::array<std::byte, 32>;
 using UUID = std::array<std::byte, 16>;
-using DataPair = std::pair<Varchar, int32_t>;
 
 DEFINE_MSG( UnspecifiedMessage, EMessageType::Unspecified, EMessageChannelType::Unspecified )
 DEFINE_MSG( PingPongMessage, EMessageType::PingPong, EMessageChannelType::Comm )
@@ -252,13 +251,17 @@ DEFINE_MSG_WITH_BODY(
 DEFINE_MSG_WITH_BODY(
     CharacterStatusMessage, EMessageType::CharacterStatus, EMessageChannelType::PlayerState,
 
-CharacterStatusMessage(DataPair InDataPair)
+CharacterStatusMessage(int64_t userId, int64_t characterId, int64_t changedhp, int64_t changedexp)
 {
-    StatName = std::move(InDataPair.first);
-    Increasement = InDataPair.second;
+    user_id = userId;
+    character_id = characterId;
+    changed_Hp = changedhp;
+    changed_Exp = changedexp;
 }
-Varchar StatName = "";      // 조정할 스탯의 키값
-int32 Increasement = 0; // 조정할 스탯의 수치
+int64_t user_id = 0;        // 소유자 userid
+int64_t character_id = 0;   // 
+int64_t changed_Hp = 0;     // 변경할 hp 값
+int64_t changed_Exp = 0;    // 변경할 exp 값
 )
 
 #pragma pack( pop )

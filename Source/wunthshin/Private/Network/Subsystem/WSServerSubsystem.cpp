@@ -184,6 +184,11 @@ void UWSServerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	GOnServerSubsystemInitialized.Broadcast();
 }
 
+bool UWSServerSubsystem::TryChangeCharacterStatus(const FString& InStatName, const int32 InStatIncreasement)
+{
+	return false;
+}
+
 bool UWSServerSubsystem::TrySendRegister(const FString& InID, const FString& InEmail, const FSHA256Signature& HashedPassword)
 {
 	if (!RegisterChannel)

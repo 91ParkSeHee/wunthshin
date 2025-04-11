@@ -116,4 +116,6 @@ public:
 	void SetHP(const float HP);
 
 	void CopyStats(const FCharacterStats& CharacterStats);
+
+	void SetCurrentStats(const FString InStatName, const int32 InStatIncreasement);
 };

@@ -61,6 +61,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Hashing")
 	FString HashFStringToSHA256(const FString& PlainText);
 
+#pragma region [Character] Send
+public:
+	bool TryChangeCharacterStatus(const FString& InStatName, const int32 InStatIncreasement);
+#pragma endregion
+	
 protected:
 	void Tick(float DeltaTime) override;
 
@@ -83,6 +88,6 @@ private:
 	UWSRegisterChannel* RegisterChannel = nullptr;
 
 	UWSItemChannel* ItemChannel = nullptr;
-	
+
 	UWSPlayerStateChannel* PlayerStateChannel = nullptr;
 };
