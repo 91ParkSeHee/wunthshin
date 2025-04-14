@@ -193,7 +193,7 @@ CharacterStatusMessage(DataPair InDataPair)
     Increasement = InDataPair.second;
 }
 Varchar StatName = "";      // 조정할 스탯의 키값(스탯이름)
-int32 Increasement = 0;     // 조정할 스탯의 수치
+int32_t Increasement = 0;     // 조정할 스탯의 수치
 )
 
 #pragma pack( pop )
