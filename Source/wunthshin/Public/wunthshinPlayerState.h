@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerState.h"
 #include "Network/Subsystem/WSServerSubsystem.h"
-#include "Network/Channel/Public/WSLoginChannel.h"
+#include "Network/Channel/WSLoginChannel.h"
 #include "wunthshinPlayerState.generated.h"
 
 

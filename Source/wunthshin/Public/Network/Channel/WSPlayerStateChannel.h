@@ -1,5 +1,5 @@
 #pragma once
-#include "wunthshin/Network/Channel/WSChannelBase.h"
+#include "Network/Channel/WSChannelBase.h"
 #include "WSPlayerStateChannel.generated.h"
 
 class AwunthshinPlayerController;
@@ -36,10 +36,6 @@ public:
 
 protected:
 	virtual void SendBunchInternal(const EMessageType MessageType, MessageBase& Bunch) override;
-
-//public:
-	UPROPERTY()
-	//FOnChangedCharacterStat OnChangedCharacterStat;
 
 private:
 	UPROPERTY()

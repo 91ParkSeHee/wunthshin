@@ -1,4 +1,6 @@
 #pragma once
+#include <message.h>
+
 #include "CoreMinimal.h"
 #include "../WSNetDriver.h"
 #include "Subsystems/GameInstanceSubsystem.h"
@@ -19,6 +21,10 @@ UCLASS(Config = Engine)
 class WUNTHSHIN_API UWSServerSubsystem : public UGameInstanceSubsystem, public FTickableGameObject, public FNetworkNotify
 {
 	GENERATED_BODY()
+
+public:
+	void initialize(FSubsystemCollectionBase* Collection);
+	
 public:
 	UFUNCTION(BlueprintCallable)
 	UWSLoginChannel* GetLoginChannel() { return LoginChannel; }
@@ -27,7 +33,7 @@ public:
 	UWSItemChannel* GetItemChannel() { return ItemChannel; }
 
 	UFUNCTION(BlueprintCallable)
-  UWSRegisterChannel* GetRegisterChannel() { return RegisterChannel; }
+	UWSRegisterChannel* GetRegisterChannel() { return RegisterChannel; }
 
 	bool HashPassword(const FString& InPlainPassword, FSHA256Signature& OutSignature, const FString& InSalt = TEXT("")) const;
 
@@ -63,7 +69,10 @@ public:
 
 #pragma region [Character] Send
 public:
-	bool TryChangeCharacterStatus(const FString& InStatName, const int32 InStatIncreasement);
+	UFUNCTION()
+	void SendCharacterStatus();
+	
+	bool TryChangeCharacterStatus(const UUID InSessionID, const int64 InCharacterID, const int64 InChangedHP, const int64 InChangedExp);
 #pragma endregion
 	
 protected:

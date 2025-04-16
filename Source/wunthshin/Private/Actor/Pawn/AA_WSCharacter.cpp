@@ -271,6 +271,9 @@ void AA_WSCharacter::BeginPlay()
             FAttachmentTransformRules::SnapToTargetNotIncludingScale,
             RightHandWeaponSocketName
         ));
+
+    
+    
 }
 
 void AA_WSCharacter::OnConstruction(const FTransform& Transform)
@@ -297,8 +300,12 @@ float AA_WSCharacter::TakeDamage(float Damage, FDamageEvent const& DamageEvent, 
             {
                 ApplyElement(EventInstigator, Weapon->GetElement());
             }
-
+            
             Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+
+            auto subsystem = GetWorld()->GetSubsystem<UWorldStatusSubsystem>();
+            subsystem->OnCharacterStatusChanged.Broadcast();
+            
             return Damage;
         }
     }

@@ -45,6 +45,11 @@ class WUNTHSHIN_API UWG_WSInGameBundle : public UWG_WSUserWidgetBase
 protected:
 	UFUNCTION()
 	void BindStamina(APawn* OldPawn, APawn* NewPawn);
+
+	UFUNCTION()
+	void BindExpBar();
+	UFUNCTION()
+	void UpdateExpBar();
 	
 	virtual void NativeConstruct() override;
 	virtual void NativeOnInitialized() override;
@@ -78,6 +83,9 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	UProgressBar* StaminaBar;
+
+	UPROPERTY(meta = (BindWidget))
+	UProgressBar* ExpBar;
 };
 
 

@@ -250,19 +250,16 @@ DEFINE_MSG_WITH_BODY(
 
 DEFINE_MSG_WITH_BODY(
     CharacterStatusMessage, EMessageType::CharacterStatus, EMessageChannelType::PlayerState,
-
-CharacterStatusMessage(int64_t userId, int64_t characterId, int64_t changedhp, int64_t changedexp)
-{
-    user_id = userId;
-    character_id = characterId;
-    changed_Hp = changedhp;
-    changed_Exp = changedexp;
-}
-int64_t user_id = 0;        // 소유자 userid
-int64_t character_id = 0;   // 
-int64_t changed_Hp = 0;     // 변경할 hp 값
-int64_t changed_Exp = 0;    // 변경할 exp 값
-)
+        UUID    sessionID{};      // 소유자 userid
+        int64_t character_id = 0; //
+        int64_t changed_Hp   = 0; // 변경할 hp 값
+        int64_t changed_Exp  = 0; // 변경할 exp 값
+        CharacterStatusMessage( const UUID& InSessionID, int64_t characterId, int64_t changedhp, int64_t changedexp ) {
+            sessionID    = InSessionID;
+            character_id = characterId;
+            changed_Hp   = changedhp;
+            changed_Exp  = changedexp;
+        } )
 
 #pragma pack( pop )
 

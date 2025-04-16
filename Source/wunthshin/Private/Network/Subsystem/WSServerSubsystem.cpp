@@ -5,11 +5,20 @@
 #include "Network/Channel/WSPlayerStateChannel.h"
 #include "Misc/sha256.h"
 #include "message.h"
+#include "Component/StatsComponent.h"
 #include "Misc/Paths.h"
 #include "Misc/outputdeviceNull.h"
+#include "Subsystem/CharacterSubsystem.h"
+#include "Subsystem/WorldStatusSubsystem.h"
 
 FOnServerSubsystemInitialized GOnServerSubsystemInitialized;
 constexpr static size_t IDSizeLimit = sizeof(decltype(std::declval<LoginMessage>().name._Elems));
+
+void UWSServerSubsystem::initialize(FSubsystemCollectionBase* Collection)
+{
+	auto subsystem = GetWorld()->GetSubsystem<UWorldStatusSubsystem>();
+	subsystem->OnCharacterStatusChanged.AddDynamic(this, &ThisClass::SendCharacterStatus);
+}
 
 bool UWSServerSubsystem::HashPassword(const FString& InPlainPassword, FSHA256Signature& OutSignature, const FString& InSalt) const
 {
@@ -184,9 +193,40 @@ void UWSServerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	GOnServerSubsystemInitialized.Broadcast();
 }
 
-bool UWSServerSubsystem::TryChangeCharacterStatus(const FString& InStatName, const int32 InStatIncreasement)
+void UWSServerSubsystem::SendCharacterStatus()
 {
-	return false;
+	auto subsystem = GetGameInstance()->GetSubsystem<UCharacterSubsystem>();
+	auto currentStat = subsystem->GetCurrentCharacter()->GetStatsComponent()->GetStats();
+	UUID sessionID = GetSessionID().uuid;
+	int64 characeterID = 0;
+	int64 NewHP = currentStat.HP;
+	int64 NewExp = currentStat.CurrentExp;
+	
+	TryChangeCharacterStatus(sessionID, characeterID, NewHP, NewExp);
+}
+
+bool UWSServerSubsystem::TryChangeCharacterStatus(const UUID InSessionID, const int64 InCharacterID, const int64 InChangedHP, const int64 InChangedExp)
+{
+	if (!PlayerStateChannel)
+	{
+		check(false);
+		return false;
+	}
+
+	if (InSessionID.empty() || InCharacterID < 0)
+	{
+		check(false);
+		return false;
+	}
+
+	CharacterStatusMessage message;
+	message.sessionID = InSessionID;
+	message.character_id = InCharacterID;
+	message.changed_Hp = InChangedHP;
+	message.changed_Exp = InChangedExp;
+	FNetPlayerStateChannelCharacterStatusMessage::Send(NetDriver->ServerConnection, message);
+	
+	return true;
 }
 
 bool UWSServerSubsystem::TrySendRegister(const FString& InID, const FString& InEmail, const FSHA256Signature& HashedPassword)

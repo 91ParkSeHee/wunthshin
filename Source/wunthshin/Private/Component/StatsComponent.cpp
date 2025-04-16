@@ -4,6 +4,7 @@
 #include "Logging/LogMacros.h"
 
 #include "Actor/Pawn/AA_WSCharacter.h"
+#include "Subsystem/WorldStatusSubsystem.h"
 
 DEFINE_LOG_CATEGORY(LogStatsComponent);
 

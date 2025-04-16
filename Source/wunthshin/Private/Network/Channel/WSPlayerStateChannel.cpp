@@ -1,8 +1,11 @@
-#include "wunthshin/Network/Channel/Public/WSPlayerStateChannel.h"
-#include "wunthshin/Controller/PlayerController/wunthshinPlayerController.h"
+#include "Network/Channel/WSPlayerStateChannel.h"
+#include "Controller/wunthshinPlayerController.h"
 #include "Kismet/GameplayStatics.h"
-#include "wunthshin/Components/Stats/StatsComponent.h"
-#include "wunthshin/Subsystem/GameInstanceSubsystem/Character/CharacterSubsystem.h"
+#include "Component/StatsComponent.h"
+#include "Network/Channel/WSLoginChannel.h"
+#include "Network/Subsystem/WSServerSubsystem.h"
+#include "Subsystem/CharacterSubsystem.h"
+#include "Subsystem/WorldStatusSubsystem.h"
 
 UWSPlayerStateChannel::UWSPlayerStateChannel()
 {
@@ -17,12 +20,6 @@ void UWSPlayerStateChannel::ReceivedBunch(MessageBase& Bunch)
 	case EMessageType::CharacterStatus:
 		{
 			CharacterStatusMessage& CharMessage = reinterpret_cast<CharacterStatusMessage&>(Bunch);
-			FString statName = CharMessage.StatName.data();
-			int32 statIncreasement = CharMessage.Increasement;
-			
-			UStatsComponent* statComp = CurrentPlayerController->GetComponentByClass<UStatsComponent>();
-			
-			
 			
 		}
 		
@@ -39,7 +36,13 @@ void UWSPlayerStateChannel::SendBunchInternal(const EMessageType MessageType, Me
 	case EMessageType::CharacterStatus:
 		{
 			CharacterStatusMessage& CharMessage = reinterpret_cast<CharacterStatusMessage&>(Bunch);
-			
+			UWSServerSubsystem* Subsystem = GetSubsystem();
+			auto sessionID = GetSubsystem()->GetLoginChannel()->GetSessionID();
+			auto statComp = CurrentPlayerController->Owner->GetComponentByClass<UStatsComponent>();
+			CharMessage.sessionID = sessionID.uuid;
+			CharMessage.character_id = 0;
+			CharMessage.changed_Hp = statComp->GetHP();
+			CharMessage.changed_Exp = statComp->GetStats().CurrentExp;
 		}
 		break;
 		
