@@ -23,7 +23,7 @@ class WUNTHSHIN_API UWSServerSubsystem : public UGameInstanceSubsystem, public F
 	GENERATED_BODY()
 
 public:
-	void initialize(FSubsystemCollectionBase* Collection);
+	void Init();
 	
 public:
 	UFUNCTION(BlueprintCallable)

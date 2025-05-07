@@ -21,33 +21,30 @@
 
 UImage* UWG_WSInGameBundle::FadeImageStatic = nullptr;
 
-void UWG_WSInGameBundle::BindStamina(APawn* OldPawn, APawn* NewPawn)
+void UWG_WSInGameBundle::BindGauges(APawn* OldPawn, APawn* NewPawn)
 {
 	if (Cast<AA_WSCharacter>(OldPawn))
 	{
 		StaminaBar->PercentDelegate.Unbind();
+		HpBar->PercentDelegate.Unbind();
+		ExpBar->PercentDelegate.Unbind();
 	}
 
 	if (const AA_WSCharacter* NewCharacter = Cast<AA_WSCharacter>(NewPawn))
 	{
 		CurrentCharacterStat = NewCharacter->GetStatsComponent();
 		StaminaBar->PercentDelegate.BindDynamic(CurrentCharacterStat, &UStatsComponent::GetStaminaRatioNonConst);
+		HpBar->PercentDelegate.BindDynamic(CurrentCharacterStat, &UStatsComponent::GetHPRatioNonConst);
+		ExpBar->PercentDelegate.BindDynamic(CurrentCharacterStat, &UStatsComponent::GetExpRatioNonConst);
 	}
 
+	UpdateGauges();
+}
+
+void UWG_WSInGameBundle::UpdateGauges()
+{
 	StaminaBar->SynchronizeProperties();
-}
-
-void UWG_WSInGameBundle::BindExpBar()
-{
-	int32 currentExp = CurrentCharacterStat->GetStats().CurrentExp;
-
-	ExpBar->PercentDelegate.BindDynamic(CurrentCharacterStat, &UStatsComponent::UStatsComponent::GetExpRatioNonConst);
-
-	ExpBar->SynchronizeProperties();
-}
-
-void UWG_WSInGameBundle::UpdateExpBar()
-{
+	HpBar->SynchronizeProperties();
 	ExpBar->SynchronizeProperties();
 }
 
@@ -77,7 +74,7 @@ void UWG_WSInGameBundle::NativeConstruct()
 
 	// 이벤트 바인딩
 	auto subsystem = GetWorld()->GetSubsystem<UWorldStatusSubsystem>();
-	subsystem->OnCharacterStatusChanged.AddDynamic(this, &UWG_WSInGameBundle::UpdateExpBar);
+	subsystem->OnCharacterStatusChanged.AddDynamic(this, &UWG_WSInGameBundle::UpdateGauges);
 }
 
 void UWG_WSInGameBundle::NativeOnInitialized()
@@ -101,14 +98,13 @@ void UWG_WSInGameBundle::NativeOnInitialized()
 		}
 	}
 
-	if (const AA_WSCharacter* Character = Cast<AA_WSCharacter>(GetPlayerContext().GetPawn()))
+	if (AA_WSCharacter* Character = Cast<AA_WSCharacter>(GetPlayerContext().GetPawn()))
 	{
 		UStatsComponent* StatsComponent = Character->GetStatsComponent();
-		StaminaBar->PercentDelegate.BindDynamic(StatsComponent, &UStatsComponent::GetStaminaRatioNonConst);
-		StaminaBar->SynchronizeProperties();
+		BindGauges(nullptr,Cast<APawn>(Character));
 	}
 
-	GetPlayerContext().GetPlayerController()->OnPossessedPawnChanged.AddUniqueDynamic(this, &ThisClass::BindStamina);
+	GetPlayerContext().GetPlayerController()->OnPossessedPawnChanged.AddUniqueDynamic(this, &ThisClass::BindGauges);
 }
 
 void UWG_WSInGameBundle::NativeDestruct()

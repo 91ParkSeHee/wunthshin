@@ -14,9 +14,12 @@
 FOnServerSubsystemInitialized GOnServerSubsystemInitialized;
 constexpr static size_t IDSizeLimit = sizeof(decltype(std::declval<LoginMessage>().name._Elems));
 
-void UWSServerSubsystem::initialize(FSubsystemCollectionBase* Collection)
+void UWSServerSubsystem::Init()
 {
 	auto subsystem = GetWorld()->GetSubsystem<UWorldStatusSubsystem>();
+
+	if (subsystem == nullptr) return;
+	
 	subsystem->OnCharacterStatusChanged.AddDynamic(this, &ThisClass::SendCharacterStatus);
 }
 
@@ -190,6 +193,7 @@ FUUIDWrapper UWSServerSubsystem::GetSessionID() const
 void UWSServerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	ConnectToServer(Host, Port);
+	Init();
 	GOnServerSubsystemInitialized.Broadcast();
 }
 

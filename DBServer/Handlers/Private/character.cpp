@@ -32,13 +32,14 @@ void CharacterHandler::HandleChangeStatus( const size_t Index, MessageBase& mess
     Status.character_id = characterMessage.character_id;
     Status.current_hp = characterMessage.changed_Hp;
     Status.current_exp = characterMessage.changed_Exp;
-    
+       
+
     if ( characterTable->Execute<bool>( &Characterstatus::UpdateValue, Status ) )
     {
-        
+        CONSOLE_OUT( __FUNCTION__, "CurrentHP : {}, CurrentEXP : {}", Status.current_hp, Status.current_exp );
     }
     else
     {
-    
+        
     }
 }
