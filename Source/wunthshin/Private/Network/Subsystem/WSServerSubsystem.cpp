@@ -156,6 +156,7 @@ void UWSServerSubsystem::ConnectToServer(const FString& InHost, int32 InPort)
 	LoginChannel = Cast<UWSLoginChannel>(NetDriver->ServerConnection->Channels[(uint8)EMessageChannelType::Login]);
 	RegisterChannel = Cast<UWSRegisterChannel>(NetDriver->ServerConnection->Channels[(uint8)EMessageChannelType::Register]);
 	ItemChannel = Cast<UWSItemChannel>(NetDriver->ServerConnection->Channels[(uint8)EMessageChannelType::Item]);
+	PlayerStateChannel = Cast<UWSPlayerStateChannel>(NetDriver->ServerConnection->Channels[(uint8)EMessageChannelType::PlayerState]);
 #endif
 }
 
@@ -193,7 +194,6 @@ FUUIDWrapper UWSServerSubsystem::GetSessionID() const
 void UWSServerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 {
 	ConnectToServer(Host, Port);
-	Init();
 	GOnServerSubsystemInitialized.Broadcast();
 }
 

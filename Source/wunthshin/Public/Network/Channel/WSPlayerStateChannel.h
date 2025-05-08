@@ -33,13 +33,15 @@ public:
 	
 public:
 	virtual void ReceivedBunch(MessageBase& Bunch) override;
-
 protected:
 	virtual void SendBunchInternal(const EMessageType MessageType, MessageBase& Bunch) override;
 
 private:
 	UPROPERTY()
 	AwunthshinPlayerController* CurrentPlayerController;
+
+	UPROPERTY()
+	class UCharacterSubsystem* CharaceterSubsystem = nullptr;
 
 	CharacterStatusMessage PreparedMessage;
 };

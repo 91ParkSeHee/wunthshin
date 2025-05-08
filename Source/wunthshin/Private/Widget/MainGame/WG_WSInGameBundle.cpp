@@ -17,6 +17,7 @@
 #include "Subsystem/CharacterSubsystem.h"
 #include "Actor/Pawn/AA_WSCharacter.h"
 #include "Component/StatsComponent.h"
+#include "Network/Subsystem/WSServerSubsystem.h"
 #include "Subsystem/WorldStatusSubsystem.h"
 
 UImage* UWG_WSInGameBundle::FadeImageStatic = nullptr;

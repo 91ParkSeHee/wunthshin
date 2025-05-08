@@ -23,6 +23,7 @@ class WUNTHSHIN_API UWSServerSubsystem : public UGameInstanceSubsystem, public F
 	GENERATED_BODY()
 
 public:
+	UFUNCTION()
 	void Init();
 	
 public:

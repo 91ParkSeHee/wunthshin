@@ -85,6 +85,7 @@ class WUNTHSHIN_API UWorldStatusSubsystem : public UTickableWorldSubsystem
 	
 public:
 	FOnWeaponAttackEnded OnWeaponAttackEnded;
+
 	FOnCharacterStatusChanged OnCharacterStatusChanged;
 	
 	UWorldStatusSubsystem();
