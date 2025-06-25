@@ -1,14 +1,17 @@
 #include "../Public/character.h"
 #include "../Public/login.h"
 #include "../../Public/dbcon.hpp"
+#include "../../Public/utility.hpp"
 #include "../../Data/Public/characterStatus.hpp"
 
-bool CharacterHandler::ShouldHandle( EMessageType messageType )
+HandlerRegistration<CharacterStatusHandler> CharacterStatusHandlerRegistration( "characterstatus" );
+
+bool CharacterStatusHandler::ShouldHandle( EMessageType messageType )
 {
     return messageType == EMessageType::CharacterStatus;
 }
 
-void CharacterHandler::Handle( const size_t index, MessageBase& message )
+void CharacterStatusHandler::Handle( const size_t index, MessageBase& message )
 {
     switch (message.GetType())
     {
@@ -20,13 +23,13 @@ void CharacterHandler::Handle( const size_t index, MessageBase& message )
     }
 }
 
-void CharacterHandler::HandleChangeStatus( const size_t Index, MessageBase& message )
+void CharacterStatusHandler::HandleChangeStatus( const size_t Index, MessageBase& message )
 {
     CharacterStatusMessage& characterMessage = CastTo<EMessageType::CharacterStatus>( message );
     LoginHandler*           loginHandler = GlobalScope::GetHandler().GetHandler<LoginHandler>( "login" );
     const size_t userId = loginHandler->GetLoginUser( characterMessage.sessionID );
 
-    const Database::Table* characterTable = GlobalScope::GetDatabase().GetTable( "characterStatus" );
+    const Database::Table* characterTable = GlobalScope::GetDatabase().GetTable( "characterstatus" );
     Characterstatus        Status;
     Status.user_id = userId;
     Status.character_id = characterMessage.character_id;

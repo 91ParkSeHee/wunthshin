@@ -8,7 +8,7 @@
 
 struct Characterstatus
 {
-    static constexpr const char* TableName = "characterStatus";
+    static constexpr const char* TableName = "characterstatus";
 
     size_t user_id; 
     size_t character_id;
@@ -39,9 +39,8 @@ struct Characterstatus
     static bool UpdateValue(const Characterstatus& value, pqxx::work&& tx)
     {
         const pqxx::result result =
-                tx.exec( "UPDATE $1 SET (current_hp=$2, current_exp=$3) WHERE user_id=$4, character_id=$5",
+                tx.exec( "UPDATE characterstatus SET current_hp=$1, current_exp=$2 WHERE user_id=$3, character_id=$4",
                          {
-                                 TableName,
                                  value.current_hp,
                                  value.current_exp,
                                  value.user_id,
@@ -52,4 +51,4 @@ struct Characterstatus
     }
 };
 
-static TableRegistration<Characterstatus> CharacterStatusRegistration( "characterStatus" );
+static TableRegistration<Characterstatus> CharacterStatusRegistration( "characterstatus" );

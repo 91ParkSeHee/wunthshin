@@ -30,7 +30,7 @@ class WUNTHSHIN_API UWSPlayerStateChannel : public UWSChannelBase
 
 public:
 	UWSPlayerStateChannel();
-	
+
 public:
 	virtual void ReceivedBunch(MessageBase& Bunch) override;
 protected:
@@ -39,9 +39,4 @@ protected:
 private:
 	UPROPERTY()
 	AwunthshinPlayerController* CurrentPlayerController;
-
-	UPROPERTY()
-	class UCharacterSubsystem* CharaceterSubsystem = nullptr;
-
-	CharacterStatusMessage PreparedMessage;
 };

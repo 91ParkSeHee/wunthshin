@@ -1,7 +1,7 @@
 #pragma once
 #include "../../Public/message-handler.h"
 
-struct CharacterHandler : HandlerImplementation
+struct CharacterStatusHandler : HandlerImplementation
 {
     bool ShouldHandle( EMessageType messageType ) override;
     void Handle( const size_t index, MessageBase& message ) override;
